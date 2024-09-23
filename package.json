@@ -4,7 +4,7 @@
   "description": "",
   "main": "01_photocopier.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest 02_stackPhotocopier.test.js"
   },
   "repository": {
     "type": "git",
