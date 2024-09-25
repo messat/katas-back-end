@@ -39,4 +39,18 @@ describe("photocopier - makes a new copy of the blueprint data", () => {
       author: "Katherine",
     })
   });
+  it("Object without isCopy property ", () => {
+    const blueprint = {
+      title: "A guide to goat rearing",
+      mainText: "Feed them",
+      author: "Katherine",
+    };
+    const copy = photocopier(blueprint)
+    expect(copy).toEqual({
+      isCopy: true,
+      title: "A guide to goat rearing",
+      mainText: "Feed them",
+      author: "Katherine",
+    })
+  });
 });
