@@ -1,7 +1,12 @@
 const stackPhotocopier = require("../02_stackPhotocopier");
 
 describe("stackPhotocopier - all blueprint properties are unchanged", () => {
-  it("Blueprint copy returns a new reference in memory for the array an objects nested within the data structure", () => {
+  it("An empty array returns when no blueprints are passed in", () => {
+    const blueprints = []
+    const copyStack = stackPhotocopier(blueprints)
+      expect(copyStack).toEqual(copyStack)
+  });
+  it("Blueprint copy returns a new reference in memory for the array and objects nested within the data structure", () => {
     const blueprints = [
       {
         isCopy: false,
@@ -30,7 +35,7 @@ describe("stackPhotocopier - all blueprint properties are unchanged", () => {
           author: "Katherine",
         }])
   });
-  it("Once the blueprint has been copied, the isCopy property has changed to true for each nested object. Checking the distance nested objects having new reference in memory", () => {
+  it("Once the blueprint has been copied, the isCopy property has changed to true for each nested object. Nested objects have new reference in memory", () => {
     const blueprints = [
       {
         isCopy: false,
@@ -66,5 +71,34 @@ describe("stackPhotocopier - all blueprint properties are unchanged", () => {
       ])
       expect(blueprints[1]).not.toBe(copyStack[1])
 
+  });
+  it("Adds isCopy property when the object does not contain this property", () => {
+    const blueprints = [
+      {
+        title: "A guide to goat rearing",
+        mainText: "Feed them",
+        author: "Katherine",
+      }]
+      const copyStack = stackPhotocopier(blueprints)
+      expect(copyStack).toEqual([
+        {
+          isCopy: true,
+          title: "A guide to goat rearing",
+          mainText: "Feed them",
+          author: "Katherine",
+        }])
+  });
+  it("All non-isCopy properties remain unchanged after copying", () => {
+    const blueprints = [
+      {
+        isCopy: false,
+        title: "A guide to goat rearing",
+        mainText: "Feed them",
+        author: "Katherine",
+      }]
+      const copyStack = stackPhotocopier(blueprints)
+      expect(copyStack[0].title).toBe("A guide to goat rearing");
+      expect(copyStack[0].mainText).toBe("Feed them");
+      expect(copyStack[0].author).toBe("Katherine");
   });
 });
